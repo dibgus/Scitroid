@@ -1,2 +1,3 @@
-/Scitroid/Temp/*
-/Scitroid/Library/metadata
+Temp\*
+Library\metadata\*\
+ProjectSettings\*
