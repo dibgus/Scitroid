@@ -9,8 +9,16 @@ public class Player : MonoBehaviour {
     public Sprite[] rightSprites;
     public Sprite[] leftSprites;
     public SpriteRenderer thisSprite;
+    public float speed;
+    public int damage;
+    public int health;
+    public float jumpHeight;
+    public int energy;
 
-	// Use this for initialization
+    public int maxEnergy;
+    public int maxHealth;
+
+	// Use this for initializations
 	void Start () {
         thisSprite.sprite = leftSprites[0];
 	}
