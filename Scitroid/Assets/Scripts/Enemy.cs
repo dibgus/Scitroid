@@ -111,4 +111,15 @@ public class Enemy : MonoBehaviour {
 
         return false;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Player>().health -= 5;
+
+            collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
+            this.GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
+        }
+    }
 }

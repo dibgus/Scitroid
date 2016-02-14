@@ -15,7 +15,7 @@ public class PlayerBars : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(player.health != 0)
-        healthBar.value = (float)player.health / player.maxHealth;
+        healthBar.value = player.health / (float)player.maxHealth;
         if(player.energy != 0)
         energyBar.value = player.energy / (float)player.maxEnergy;
     }
