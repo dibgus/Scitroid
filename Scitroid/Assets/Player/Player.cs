@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     private float shotDelay;
     public GameObject plasma;
     private GameObject instantiatedPlasma;
-    public bool plasmaUpgrade = false;
+    public bool plasmaUpgrade;
     public int plasmaBlastCost;
 
     //Blink
@@ -58,6 +58,7 @@ public class Player : MonoBehaviour {
         maxHealth = 100;
         energy = 100;
         maxEnergy = 100;
+        plasmaUpgrade = true;
 	}
 	
 	// Update is called once per frame
