@@ -10,10 +10,12 @@ public class Player : MonoBehaviour {
     public Sprite[] ghostSprites;
     public Sprite[] punchingSprites;
     SpriteRenderer thisSprite;
-    
+
     //Movement
-    bool HasJumped = false;
-    bool canDoubleJump = true;
+    bool HasJumped;
+    int jumpCount;
+    bool canDoubleJump;
+    bool canJump;
     bool IsMoving = false;
     bool OnLadder = false;
     public float speed;
@@ -78,39 +80,28 @@ public class Player : MonoBehaviour {
         superBlink = false;
         plasmaUpgrade = 0;
         punchUpgrade = false;
+        jumpCount = 0;
+        canDoubleJump = false;
+        canJump = false;
+        HasJumped = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
         RaycastHit2D checkDown = Physics2D.Raycast(new Vector2(this.transform.position.x, this.transform.position.y), Vector2.down, Mathf.Infinity, ignoreLayer);
         float distance = checkDown.distance;
-        print(distance);
-        if (canDoubleJump)
+        
+        if (distance <= .62f)
         {
-            if (distance >= 0.19f)
-            {
-                HasJumped = false;
-            }
-            else
-            {
-                HasJumped = true;
-            }
+            canJump = true;
         }
+
         else
         {
-            if (distance <= 0.2f)
-            {
-                HasJumped = false;
-            }
-            else
-            {
-                HasJumped = true;
-            }
+            canJump = false;
         }
 
-
-	    if(Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += Vector3.right * 0.01f;
             RightFacing = true;
@@ -141,13 +132,21 @@ public class Player : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+            //if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
 
-            if (!HasJumped && !OnLadder)
+            if (canJump)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+                canDoubleJump = true;
             }
-            //HasJumped = true;
+
+            if (canDoubleJump)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+                canDoubleJump = false;
+                canJump = true;
+            }
+            //HasDoubleJumped = true;
         }
         if (Input.GetKey(KeyCode.Q) && punchUpgrade)
         {
@@ -286,7 +285,7 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         print(collision.gameObject);
-        //HasJumped = false;
+        //HasDoubleJumped = false;
     }
 
     void CamSetup()
