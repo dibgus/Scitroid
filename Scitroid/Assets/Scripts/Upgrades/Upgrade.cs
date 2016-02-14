@@ -8,7 +8,7 @@ public class Upgrade : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<SpriteRenderer>().sprite = sprites[0];
+        //GetComponent<SpriteRenderer>().sprite = sprites[0];
 	}
 	
 	// Update is called once per frame
