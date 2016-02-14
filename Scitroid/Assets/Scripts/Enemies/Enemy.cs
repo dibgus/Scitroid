@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     public int damage;
     public bool right;
     bool isJumping;
+    public float stunTime;
 
 	// Use this for initialization
 	void Start () {
@@ -25,12 +26,29 @@ public class Enemy : MonoBehaviour {
         health = 100;
         damage = 10;
         groundLayer = 1 << 10;
+        stunTime = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Move();
-        Jump();
+        if (stunTime <= 0)
+        {
+            Color c = GetComponent<SpriteRenderer>().color;
+            c.r = 1.0f;
+            c.g = 1.0f;
+            GetComponent<SpriteRenderer>().color = c;
+            Move();
+            Jump();
+        }
+
+        if (stunTime > 0)
+        {
+            stunTime -= Time.deltaTime;
+            Color c = GetComponent<SpriteRenderer>().color;
+            c.r = 0.25f;
+            c.g = 0.25f;
+            GetComponent<SpriteRenderer>().color = c;
+        }
 
         if (health <= 0)
         {

@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
     private float shotDelay;
     public GameObject plasma;
     private GameObject instantiatedPlasma;
-    public bool plasmaUpgrade = false;
+    public int plasmaUpgrade;
     public int plasmaBlastCost;
 
     //Blink
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
         energy = 100;
         maxEnergy = 100;
         plasmaDelay = 0.5f;
-        plasmaUpgrade = true;
+        plasmaUpgrade = 0;
         plasmaBlastCost = 10;
         blinkCooldown = 1;
 	}
@@ -253,18 +253,19 @@ public class Player : MonoBehaviour {
             shotDelay -= Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.W) && shotDelay<=0)
+        if (Input.GetKey(KeyCode.W) && plasmaUpgrade > 0 && shotDelay<=0)
         {
             instantiatedPlasma = (GameObject) Instantiate(plasma, this.transform.position, Quaternion.identity);
             shotDelay = plasmaDelay;
         }
 
-        if (Input.GetKey(KeyCode.R) && shotDelay <= 0 && plasmaUpgrade && energy>=plasmaBlastCost)
+        if (Input.GetKey(KeyCode.R) && shotDelay <= 0 && plasmaUpgrade > 1 && energy>=plasmaBlastCost)
         {
             instantiatedPlasma = (GameObject)Instantiate(plasma, this.transform.position, Quaternion.identity);
             shotDelay = plasmaDelay;
             instantiatedPlasma.transform.localScale = new Vector3(2, 2);
             energy -= plasmaBlastCost;
+            instantiatedPlasma.GetComponent<Plasma>().upgrade = plasmaUpgrade;
         }
 
         if (MustReload) CamSetup();
