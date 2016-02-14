@@ -21,7 +21,6 @@ public class Ghost : MonoBehaviour {
 
         if (hitWall.collider != null && hitWall.collider.gameObject.tag == "Wall" && hitWall.distance <= 0.1)
         {
-            print("In Wall");
             inWall = true;
             Color c = GetComponent<SpriteRenderer>().color;
             c.g -= 127;
@@ -30,7 +29,6 @@ public class Ghost : MonoBehaviour {
         }
         else if (player.GetComponent<Player>().blinkCounter > 0)
         {
-            print("On Cooldown");
             inWall = false;
             Color c = GetComponent<SpriteRenderer>().color;
             c.g -= 127;
@@ -39,7 +37,6 @@ public class Ghost : MonoBehaviour {
         }
         else
         {
-            print("Can Blink");
             inWall = false;
             Color c = GetComponent<SpriteRenderer>().color;
             c.g = 255;
