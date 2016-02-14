@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Levelizer.cs" />
      <Compile Include="Assets\Scripts\Player\BlinkAnimation.cs" />
      <Compile Include="Assets\Scripts\Player\Ghost.cs" />
+     <Compile Include="Assets\Scripts\Player\Melee.cs" />
      <Compile Include="Assets\Scripts\Player\Plasma.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerBars.cs" />
@@ -55,6 +57,7 @@
      <Compile Include="Assets\Scripts\Powerup.cs" />
      <Compile Include="Assets\Scripts\SceneChange.cs" />
      <Compile Include="Assets\Scripts\TiledCollider.cs" />
+     <Compile Include="Assets\Scripts\Upgrades\Upgrade.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

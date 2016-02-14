@@ -29,6 +29,7 @@ public class Upgrade : MonoBehaviour {
             {
                 Destroy(collision.gameObject);
             }
+
             Destroy(gameObject);
         }
     }
