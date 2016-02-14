@@ -54,6 +54,15 @@ public class Player : MonoBehaviour {
         thisSprite = GetComponent<SpriteRenderer>();
         thisSprite.sprite = walking[0];
         CamSetup();
+
+        health = 100;
+        maxHealth = 100;
+        energy = 100;
+        maxEnergy = 100;
+        plasmaDelay = 0.5f;
+        plasmaUpgrade = true;
+        plasmaBlastCost = 10;
+        blinkCooldown = 1;
 	}
 	
 	// Update is called once per frame
