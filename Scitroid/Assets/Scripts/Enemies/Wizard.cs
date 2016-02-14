@@ -16,6 +16,8 @@ public class Wizard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (health <= 0)
+            Destroy(gameObject);
         if (target.transform.position.x > transform.position.x)
             GetComponent<SpriteRenderer>().flipX = false;
         else

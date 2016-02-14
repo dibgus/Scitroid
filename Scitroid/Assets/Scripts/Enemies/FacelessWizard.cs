@@ -5,7 +5,7 @@ public class FacelessWizard : MonoBehaviour {
 
     public float health = 100;
     int damage = 10;
-    int superCoolDown = 200;
+    int superCoolDown = 150;
     int superCoolCount = 4;
     int cooldown = 50;
     public GameObject missile;
@@ -18,6 +18,8 @@ public class FacelessWizard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (health <= 0)
+            Destroy(gameObject);
         if (target.transform.position.x > transform.position.x)
             GetComponent<SpriteRenderer>().flipX = false;
         else
