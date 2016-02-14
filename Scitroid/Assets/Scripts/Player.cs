@@ -20,6 +20,8 @@ public class Player : MonoBehaviour {
 
     public GameObject ghost;
     private GameObject instantiatedGhost;
+    private GameObject instantiatedBurst;
+    public GameObject blinkBurst;
 
 
 	// Use this for initialization
@@ -118,7 +120,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.E))
         {
             blinkGhost = false;
-
+            instantiatedBurst = Instantiate(blinkBurst);
+            instantiatedBurst.transform.position = this.transform.position;
             this.transform.position = instantiatedGhost.transform.position;
             Destroy(instantiatedGhost);
         }
