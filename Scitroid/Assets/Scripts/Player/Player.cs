@@ -132,6 +132,10 @@ public class Player : MonoBehaviour {
                 else thisSprite.sprite = walking[1];
             }
         }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             //if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
@@ -315,11 +319,11 @@ public class Player : MonoBehaviour {
         GameObject[] allObjects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
         foreach (GameObject g in allObjects)
         {
-            if (g.GetComponent<SpriteRenderer>() == null) continue;
-            float right = g.transform.position.x + g.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2;
-            float left = g.transform.position.x - g.GetComponent<SpriteRenderer>().sprite.bounds.size.x / 2;
-            float top = g.transform.position.y + g.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2;
-            float bottom = g.transform.position.y - g.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2;
+            if (g.GetComponent<BoxCollider2D>() == null) continue;
+            float right = g.transform.position.x + g.GetComponent<BoxCollider2D>().bounds.size.x / 2;
+            float left = g.transform.position.x - g.GetComponent<BoxCollider2D>().bounds.size.x / 2;
+            float top = g.transform.position.y + g.GetComponent<BoxCollider2D>().bounds.size.y / 2;
+            float bottom = g.transform.position.y - g.GetComponent<BoxCollider2D>().bounds.size.y / 2;
             maxX = right > maxX ? right : maxX;
             minX = left < minX ? left : minX;
             maxY = top > maxY ? top : maxY;
