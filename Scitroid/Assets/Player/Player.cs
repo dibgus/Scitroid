@@ -31,6 +31,8 @@ public class Player : MonoBehaviour {
     private GameObject instantiatedPlasma;
 
     //Blink
+    public float blinkCooldown;
+    public float blinkCounter = 0;
     bool blinkGhost = false;
     public GameObject ghost;
     private GameObject instantiatedGhost;
@@ -164,23 +166,36 @@ public class Player : MonoBehaviour {
             instantiatedGhost.transform.position = newPos;
             instantiatedGhost.transform.localScale = this.transform.localScale;
             instantiatedGhost.GetComponent<SpriteRenderer>().sprite = ghostSprites[SpriteNum];
+
         }
 
         if (Input.GetKeyUp(KeyCode.E))
         {
+
             blinkGhost = false;
-            instantiatedBurst = Instantiate(blinkBurst);
-            instantiatedBurst.transform.position = this.transform.position;
-            this.transform.position = instantiatedGhost.transform.position;
+            if (!instantiatedGhost.GetComponent<Ghost>().inWall&&blinkCounter<=0)
+            {
+                instantiatedBurst = Instantiate(blinkBurst);
+                instantiatedBurst.transform.position = this.transform.position;
+                this.transform.position = instantiatedGhost.transform.position;
+                blinkCounter = blinkCooldown;
+            }
             Destroy(instantiatedGhost);
+
         }
+
+        if (blinkCounter > 0)
+        {
+            blinkCounter -= Time.deltaTime;
+        }
+
 
         if (shotDelay > 0)
         {
             shotDelay -= Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.W)&&shotDelay<=0)
+        if (Input.GetKey(KeyCode.W) && shotDelay<=0)
         {
             instantiatedPlasma = (GameObject) Instantiate(plasma, this.transform.position, Quaternion.identity);
             shotDelay = plasmaDelay;
