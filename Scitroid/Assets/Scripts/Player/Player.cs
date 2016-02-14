@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     //Movement
     bool HasJumped = false;
     bool IsMoving = false;
+    bool OnLadder = false;
     public float speed;
 
     //Stats
@@ -98,7 +99,8 @@ public class Player : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            if(!HasJumped)GetComponent<Rigidbody2D>().velocity = Vector2.up*3;
+            if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+            else if (!HasJumped) GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
             HasJumped = true;
         }
         if (Input.GetKey(KeyCode.Q))
@@ -222,6 +224,8 @@ public class Player : MonoBehaviour {
 
         if (MustReload) CamSetup();
         CamFollow();
+
+        //print(OnLadder);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -270,5 +274,19 @@ public class Player : MonoBehaviour {
         }
         //print(boundsX + "  ::  " + maxX +" , " + minX + "  ::  " + (player.transform.position.x + boundsX) + " , " + (player.transform.position.x-boundsX));
         cam.transform.position = new Vector3(SetX, SetY, -10);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        TiledCollider ladderCheck = col.gameObject.GetComponent<TiledCollider>();
+        if (ladderCheck != null && ladderCheck.GetLadder()) OnLadder = true;
+        print("Entered!");
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        TiledCollider ladderCheck = col.gameObject.GetComponent<TiledCollider>();
+        if (ladderCheck != null && ladderCheck.GetLadder()) OnLadder = false;
+        print("Exited!");
     }
 }
