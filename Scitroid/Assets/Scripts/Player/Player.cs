@@ -37,10 +37,13 @@ public class Player : MonoBehaviour {
     public float blinkCooldown;
     public float blinkCounter = 0;
     bool blinkGhost = false;
+    public bool superBlink = true;
     public GameObject ghost;
     private GameObject instantiatedGhost;
     private GameObject instantiatedBurst;
+    private GameObject instantiatedFire;
     public GameObject blinkBurst;
+    public GameObject fireBurst;
 
     //Attacks
     bool IsPunching = false;
@@ -186,15 +189,23 @@ public class Player : MonoBehaviour {
         {
 
             blinkGhost = false;
-            if (!instantiatedGhost.GetComponent<Ghost>().inWall&&blinkCounter<=0)
+            if (!instantiatedGhost.GetComponent<Ghost>().inWall && blinkCounter <= 0)
             {
                 instantiatedBurst = Instantiate(blinkBurst);
                 instantiatedBurst.transform.position = this.transform.position;
                 this.transform.position = instantiatedGhost.transform.position;
-                blinkCounter = blinkCooldown;
+
+                if (superBlink)
+                {
+                    instantiatedFire = Instantiate(fireBurst);
+                    instantiatedFire.transform.position = this.transform.position;
+
+                    blinkCounter = blinkCooldown;
+                }
+
+
             }
             Destroy(instantiatedGhost);
-
         }
 
         if (blinkCounter > 0)

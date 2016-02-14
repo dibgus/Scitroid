@@ -119,7 +119,8 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        print(GameObject.FindGameObjectWithTag("Explosion"));
+        if (collision.gameObject.tag == "Player" && GameObject.FindGameObjectWithTag("Explosion") == null)
         {
             collision.gameObject.GetComponent<Player>().health -= 5;
 
@@ -134,6 +135,17 @@ public class Enemy : MonoBehaviour {
                 collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
                 this.GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Explosion")
+        {
+            print("true");
+            this.GetComponent<Rigidbody2D>().velocity = Vector3.up * 5.0f;
+            this.health -= 50f;
+            return;
         }
     }
 }
