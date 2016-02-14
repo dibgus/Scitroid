@@ -5,22 +5,27 @@ public class Enemy : MonoBehaviour {
 
     public Sprite[] enemyWalking;
     public SpriteRenderer basicEnemy;
-    int spriteCounter = 0;
-    float timer = 0;
+    int spriteCounter;
+    float timer;
     Vector3 scale;
-    int groundLayer = 1 << 10;
+    int groundLayer;
 
-    public float health = 100;
-    int damage = 10;
+    public float health;
+    public int damage;
     public bool right;
     bool isJumping;
 
 	// Use this for initialization
 	void Start () {
+        spriteCounter = 0;
+        timer = 0;
         scale = transform.lossyScale;
         right = false;
         basicEnemy.sprite = enemyWalking[0];
-	}
+        health = 100;
+        damage = 10;
+        groundLayer = 1 << 10;
+    }
 	
 	// Update is called once per frame
 	void Update () {
