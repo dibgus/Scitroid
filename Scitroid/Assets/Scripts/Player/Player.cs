@@ -44,8 +44,10 @@ public class Player : MonoBehaviour {
     private GameObject instantiatedGhost;
     private GameObject instantiatedBurst;
     private GameObject instantiatedFire;
+    private GameObject instantiatedBomb;
     public GameObject blinkBurst;
     public GameObject fireBurst;
+    public GameObject bomb;
 
     //Attacks
     bool isPunching;
@@ -275,6 +277,25 @@ public class Player : MonoBehaviour {
             instantiatedPlasma.transform.localScale = new Vector3(2, 2);
             energy -= plasmaBlastCost;
             instantiatedPlasma.GetComponent<Plasma>().upgrade = plasmaUpgrade;
+        }
+
+        if (Input.GetKey(KeyCode.B))
+        {
+            instantiatedBomb = Instantiate(bomb);
+            Vector3 newPos = this.transform.position;
+
+            if (RightFacing)
+            {
+                newPos.x += 0.2f;
+            }
+            else
+            {
+                newPos.x -= 0.2f;
+            }
+            newPos.y += 0.15f;
+
+
+            instantiatedBomb.transform.position = newPos;
         }
 
         if (MustReload) CamSetup();
