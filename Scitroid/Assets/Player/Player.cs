@@ -2,34 +2,38 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
+    //Walking Animation
     float counter = 0;
     int SpriteNum = 0;
     bool RightFacing;
-    bool HasJumped = false;
     public Sprite[] walking;
     public Sprite[] ghostSprites;
     public SpriteRenderer thisSprite;
+    
+    //Movement
+    bool HasJumped = false;
     public float speed;
+
+    //Stats
     public int damage;
     public int health;
     public float jumpHeight;
     public int energy;
+    public int maxEnergy;
+    public int maxHealth;
+
+    //Plasma
     public float plasmaDelay;
     private float shotDelay;
     public GameObject plasma;
     private GameObject instantiatedPlasma;
 
-
+    //Blink
     bool blinkGhost = false;
-
     public GameObject ghost;
     private GameObject instantiatedGhost;
-
-
-	// Use this for initialization
-
-    public int maxEnergy;
-    public int maxHealth;
+    private GameObject instantiatedBurst;
+    public GameObject blinkBurst;
 
 	// Use this for initializations
 
@@ -95,11 +99,11 @@ public class Player : MonoBehaviour {
                 }
 
 
-                instantiatedGhost = (GameObject) Instantiate(ghost, newPos, this.transform.rotation);
+                instantiatedGhost = (GameObject)Instantiate(ghost, newPos, this.transform.rotation);
                 instantiatedGhost.transform.localScale = this.transform.localScale;
 
                 blinkGhost = true;
-            }    
+            }
         }
 
         if (instantiatedGhost != null)
@@ -122,7 +126,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.E))
         {
             blinkGhost = false;
-
+            instantiatedBurst = Instantiate(blinkBurst);
+            instantiatedBurst.transform.position = this.transform.position;
             this.transform.position = instantiatedGhost.transform.position;
             Destroy(instantiatedGhost);
         }
