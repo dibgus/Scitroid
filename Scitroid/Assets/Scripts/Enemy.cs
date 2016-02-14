@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     int spriteCounter = 0;
     float timer = 0;
     Vector3 scale;
+    int groundLayer = 1 << 10;
 
     int health = 100;
     int damage = 10;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour {
 	void Update () {
         Move();
         
+        if (!isInAir())
         Jump();
     }
 
@@ -33,8 +35,8 @@ public class Enemy : MonoBehaviour {
         Vector2 originLeft = new Vector2(transform.position.x - .09f, transform.position.y);
         Vector2 originRight = new Vector2(transform.position.x + .09f, transform.position.y);
 
-        RaycastHit2D hitLeft = Physics2D.Raycast(originLeft, Vector2.down);
-        RaycastHit2D hitRight = Physics2D.Raycast(originRight, Vector2.down);
+        RaycastHit2D hitLeft = Physics2D.Raycast(originLeft, Vector2.down, Mathf.Infinity, groundLayer);
+        RaycastHit2D hitRight = Physics2D.Raycast(originRight, Vector2.down, Mathf.Infinity, groundLayer);
 
         if (hitRight.collider == null && right)
         {
@@ -86,8 +88,8 @@ public class Enemy : MonoBehaviour {
     {
         Vector2 originUp = new Vector2(transform.position.x, transform.position.y);
 
-        RaycastHit2D hitLeft = Physics2D.Raycast(originUp, Vector2.left);
-        RaycastHit2D hitRight = Physics2D.Raycast(originUp, Vector2.right);
+        RaycastHit2D hitLeft = Physics2D.Raycast(originUp, Vector2.left, Mathf.Infinity, groundLayer);
+        RaycastHit2D hitRight = Physics2D.Raycast(originUp, Vector2.right, Mathf.Infinity, groundLayer);
 
         if ((hitRight.collider != null && hitRight.distance <= basicEnemy.sprite.bounds.size.x / 2 + .1) || (hitLeft.collider != null && hitLeft.distance <= basicEnemy.sprite.bounds.size.x / 2 + .1))
         {
@@ -97,13 +99,21 @@ public class Enemy : MonoBehaviour {
 
     bool isInAir()
     {
-        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down);
+        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
 
-        if (hitDown.distance > basicEnemy.sprite.bounds.size.y / 2)
+        if (hitDown.distance >= .105f)
         {
             return true;
         }
 
         return false;
+    }
+
+    void OnCollisionEnter2D(Collider2D collider)
+    {
+        if (collider.Equals(""))
+        {
+
+        }
     }
 }
