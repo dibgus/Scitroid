@@ -27,22 +27,32 @@ public class Upgrade : MonoBehaviour {
 
             if (upgradeID == 1)
             {
-                
+                collision.GetComponent<Player>().plasmaUpgrade = 2;
             }
 
             if (upgradeID == 2)
             {
-                
+                collision.GetComponent<Player>().plasmaUpgrade = 3;
             }
 
             if (upgradeID == 3)
             {
-                collision.GetComponent<Player>().blinkUpgrade = true;
+                collision.GetComponent<Player>().plasmaUpgrade = 4;
             }
 
             if (upgradeID == 4)
             {
+                collision.GetComponent<Player>().blinkUpgrade = true;
+            }
+
+            if (upgradeID == 5)
+            {
                 collision.GetComponent<Player>().superBlink = true;
+            }
+
+            if (upgradeID == 6)
+            {
+                collision.GetComponent<Player>().punchUpgrade = true;
             }
 
             Destroy(gameObject);

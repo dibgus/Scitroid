@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\EnemyBulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\Levelizer.cs" />
      <Compile Include="Assets\Scripts\Player\BlinkAnimation.cs" />
+     <Compile Include="Assets\Scripts\Player\Bomb.cs" />
      <Compile Include="Assets\Scripts\Player\Ghost.cs" />
      <Compile Include="Assets\Scripts\Player\Melee.cs" />
      <Compile Include="Assets\Scripts\Player\Plasma.cs" />
