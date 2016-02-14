@@ -54,6 +54,8 @@
      <Compile Include="Assets\Scripts\PlayerBars.cs" />
      <Compile Include="Assets\Scripts\PopupWindow.cs" />
      <Compile Include="Assets\Scripts\Powerup.cs" />
+     <Compile Include="Assets\Scripts\SceneChange.cs" />
+     <Compile Include="Assets\Scripts\TiledCollider.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

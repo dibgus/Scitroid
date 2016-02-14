@@ -54,6 +54,10 @@ public class Player : MonoBehaviour {
         thisSprite = GetComponent<SpriteRenderer>();
         thisSprite.sprite = walking[0];
         CamSetup();
+        health = 100;
+        maxHealth = 100;
+        energy = 100;
+        maxEnergy = 100;
 	}
 	
 	// Update is called once per frame
