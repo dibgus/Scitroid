@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     
     //Movement
     bool HasJumped = false;
+    bool canDoubleJump = true;
     bool IsMoving = false;
     bool OnLadder = false;
     public float speed;
@@ -54,6 +55,9 @@ public class Player : MonoBehaviour {
     Camera cam;
     float minY = 0, minX = 0, maxY = 0, maxX = 0;
 
+    //Layer
+    int ignoreLayer = 1 << 10;
+
     // Use this for initializations
 
     void Start () {
@@ -78,6 +82,33 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        RaycastHit2D checkDown = Physics2D.Raycast(new Vector2(this.transform.position.x, this.transform.position.y), Vector2.down, Mathf.Infinity, ignoreLayer);
+        float distance = checkDown.distance;
+        if (canDoubleJump)
+        {
+            if (distance <= 0.6)
+            {
+                HasJumped = false;
+            }
+            else
+            {
+                HasJumped = true;
+            }
+        }
+        else
+        {
+            if (distance <= 0.2)
+            {
+                HasJumped = false;
+            }
+            else
+            {
+                HasJumped = true;
+            }
+        }
+
+
 	    if(Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += Vector3.right * 0.01f;
@@ -107,11 +138,14 @@ public class Player : MonoBehaviour {
                 else thisSprite.sprite = walking[1];
             }
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
-            else if (!HasJumped) GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
-            HasJumped = true;
+            else if (!HasJumped)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+            }
+            //HasJumped = true;
         }
         if (Input.GetKey(KeyCode.Q) && punchUpgrade)
         {
@@ -249,7 +283,8 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        HasJumped = false;
+        print(collision.gameObject);
+        //HasJumped = false;
     }
 
     void CamSetup()
