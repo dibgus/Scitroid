@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
     //Walking Animation
     float counter = 0;
     int SpriteNum = 0;
-    public bool RightFacing;
+    public bool RightFacing,MustReload;
     public Sprite[] walking;
     public Sprite[] ghostSprites;
     public Sprite[] punchingSprites;
@@ -211,6 +211,7 @@ public class Player : MonoBehaviour {
             energy -= plasmaBlastCost;
         }
 
+        if (MustReload) CamSetup();
         CamFollow();
     }
 
