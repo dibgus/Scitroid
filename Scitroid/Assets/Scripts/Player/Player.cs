@@ -88,7 +88,7 @@ public class Player : MonoBehaviour {
         print(distance);
         if (canDoubleJump)
         {
-            if (distance <= 0.6f)
+            if (distance >= 0.19f)
             {
                 HasJumped = false;
             }
