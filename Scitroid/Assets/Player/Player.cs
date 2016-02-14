@@ -18,11 +18,11 @@ public class Player : MonoBehaviour {
 
     //Stats
     public int damage;
-    public int health;
+    public int health = 100;
     public float jumpHeight;
-    public int energy;
-    public int maxEnergy;
-    public int maxHealth;
+    public int energy = 0;
+    public int maxEnergy = 100;
+    public int maxHealth = 100;
 
     //Plasma
     public float plasmaDelay;
