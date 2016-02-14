@@ -25,8 +25,6 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Move();
-        
-        if (!isInAir())
         Jump();
     }
 
@@ -91,7 +89,7 @@ public class Enemy : MonoBehaviour {
         RaycastHit2D hitLeft = Physics2D.Raycast(originUp, Vector2.left, Mathf.Infinity, groundLayer);
         RaycastHit2D hitRight = Physics2D.Raycast(originUp, Vector2.right, Mathf.Infinity, groundLayer);
 
-        if ((hitRight.collider != null && hitRight.distance <= basicEnemy.sprite.bounds.size.x / 2 + .1) || (hitLeft.collider != null && hitLeft.distance <= basicEnemy.sprite.bounds.size.x / 2 + .1))
+        if (!isInAir() && ((hitRight.collider != null && hitRight.distance <= .2) || (hitLeft.collider != null && hitLeft.distance <= .2)))
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
         }
@@ -101,7 +99,7 @@ public class Enemy : MonoBehaviour {
     {
         RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
 
-        if (hitDown.distance >= .105f)
+        if (hitDown.distance >= .11f)
         {
             return true;
         }
@@ -111,9 +109,9 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collider2D collider)
     {
-        if (collider.Equals(""))
+        if (collider.gameObject.tag == "Plasma")
         {
-
+            health -= 30;
         }
     }
 }
