@@ -6,13 +6,19 @@ public class Player : MonoBehaviour {
     int SpriteNum = 0;
     bool RightFacing;
     bool HasJumped = false;
-    public Sprite[] rightSprites;
-    public Sprite[] leftSprites;
+    public Sprite[] walking;
+    public Sprite[] ghostSprites;
     public SpriteRenderer thisSprite;
+
+    public bool blinkGhost = false;
+
+    public GameObject ghost;
+    private GameObject instantiatedGhost;
+
 
 	// Use this for initialization
 	void Start () {
-        thisSprite.sprite = leftSprites[0];
+        thisSprite.sprite = walking[0];
 	}
 	
 	// Update is called once per frame
@@ -21,19 +27,26 @@ public class Player : MonoBehaviour {
         {
             transform.position += Vector3.right*0.01f;
             RightFacing = true;
-            thisSprite.sprite = rightSprites[SpriteNum];
+            thisSprite.sprite = walking[SpriteNum];
+            Vector3 newScale = this.transform.localScale;
+            newScale.x = 1;
+            this.transform.localScale = newScale;
         }
         else if(Input.GetKey(KeyCode.LeftArrow))
         {
             transform.position -= Vector3.right * 0.01f;
             RightFacing = false;
-            thisSprite.sprite = leftSprites[SpriteNum];
+            thisSprite.sprite = walking[SpriteNum];
+            Vector3 newScale = this.transform.localScale;
+            newScale.x = -1;
+            this.transform.localScale = newScale;
+            
         }
         else
         {
             Time = 0;
-            if (RightFacing) thisSprite.sprite = rightSprites[1];
-            else thisSprite.sprite = leftSprites[1];
+            if (RightFacing) thisSprite.sprite = walking[1];
+            else thisSprite.sprite = walking[1];
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -45,12 +58,58 @@ public class Player : MonoBehaviour {
         {
             Time = 0;
             SpriteNum += 1;
-            if (SpriteNum >= leftSprites.Length) SpriteNum = 0;
-            thisSprite.sprite = leftSprites[SpriteNum];
-            if (RightFacing) thisSprite.sprite = rightSprites[SpriteNum];
-            else thisSprite.sprite = leftSprites[SpriteNum];
+            if (SpriteNum >= walking.Length) SpriteNum = 0;
+            thisSprite.sprite = walking[SpriteNum];
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+            if (blinkGhost == false)
+            {
+                Vector3 newPos = this.transform.position;
+
+                if (RightFacing)
+                {
+                    newPos.x += 0.5f;
+                }
+                else
+                {
+                    newPos.x -= 0.5f;
+                }
+
+
+                instantiatedGhost = (GameObject) Instantiate(ghost, newPos, this.transform.rotation);
+                instantiatedGhost.transform.localScale = this.transform.localScale;
+
+                blinkGhost = true;
+            }    
+        }
+
+        if (instantiatedGhost != null)
+        {
+            Vector3 newPos = this.transform.position;
+
+            if (RightFacing)
+            {
+                newPos.x += 0.5f;
+            }
+            else
+            {
+                newPos.x -= 0.5f;
+            }
+            instantiatedGhost.transform.position = newPos;
+            instantiatedGhost.transform.localScale = this.transform.localScale;
+            instantiatedGhost.GetComponent<SpriteRenderer>().sprite = ghostSprites[SpriteNum];
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            blinkGhost = false;
+
+            this.transform.position = instantiatedGhost.transform.position;
+            Destroy(instantiatedGhost);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scitroid.CSharp", "Scitroid.CSharp.csproj", "{126107E9-FB26-2DC3-8730-B1F7C081F903}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{89EEB8C9-60EB-3BCF-D18F-8FCF571BC0B6}") = "Scitroid", "Assembly-CSharp.csproj", "{4F46A83D-B61F-11CB-F218-DBA3F9B73DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{126107E9-FB26-2DC3-8730-B1F7C081F903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{126107E9-FB26-2DC3-8730-B1F7C081F903}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{126107E9-FB26-2DC3-8730-B1F7C081F903}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{126107E9-FB26-2DC3-8730-B1F7C081F903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F46A83D-B61F-11CB-F218-DBA3F9B73DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F46A83D-B61F-11CB-F218-DBA3F9B73DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F46A83D-B61F-11CB-F218-DBA3F9B73DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F46A83D-B61F-11CB-F218-DBA3F9B73DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
