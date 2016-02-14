@@ -9,6 +9,10 @@ public class Plasma : MonoBehaviour
     public Sprite[] sprites;
     SpriteRenderer thisSprite;
     private GameObject player;
+    public int upgrade;
+    public float baseDamage;
+    public float basePlasmaBlastDamage;
+    public float damageMultiplier;
 
     // Use this for initialization
     void Start()
@@ -17,6 +21,11 @@ public class Plasma : MonoBehaviour
         thisSprite.sprite = sprites[0];
         player = GameObject.FindGameObjectWithTag("Player");
         GetComponent<Rigidbody2D>().velocity = new Vector2(player.transform.localScale.x * 3, 0.0f);
+        upgrade = player.GetComponent<Player>().plasmaUpgrade;
+        baseDamage = 30.0f;
+        basePlasmaBlastDamage = 60.0f;
+        if (upgrade == 4) damageMultiplier = 1.25f;
+        else damageMultiplier = 1.0f;
     }
 
     // Update is called once per frame
@@ -49,7 +58,13 @@ public class Plasma : MonoBehaviour
         {
             Destroy(gameObject);
 
-            collision.gameObject.GetComponent<Enemy>().health -= 30.0f * this.transform.localScale.x;
+            if (this.transform.localScale.x == 1) collision.gameObject.GetComponent<Enemy>().health -= baseDamage;
+            else collision.gameObject.GetComponent<Enemy>().health -= basePlasmaBlastDamage * damageMultiplier;
+
+            if (upgrade == 3 && this.transform.localScale.x==2)
+            {
+                collision.gameObject.GetComponent<Enemy>().stunTime = 2;
+            }
 
             if (player.GetComponent<Player>().RightFacing)
             {
