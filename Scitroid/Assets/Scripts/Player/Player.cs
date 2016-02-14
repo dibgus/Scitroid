@@ -36,8 +36,9 @@ public class Player : MonoBehaviour {
     //Blink
     public float blinkCooldown;
     public float blinkCounter = 0;
-    bool blinkGhost = false;
-    public bool superBlink = true;
+    bool blinkGhost;
+    public bool blinkUpgrade;
+    public bool superBlink;
     public GameObject ghost;
     private GameObject instantiatedGhost;
     private GameObject instantiatedBurst;
@@ -46,7 +47,8 @@ public class Player : MonoBehaviour {
     public GameObject fireBurst;
 
     //Attacks
-    bool IsPunching = false;
+    bool isPunching;
+    public bool punchUpgrade;
 
     //Camera
     Camera cam;
@@ -64,10 +66,15 @@ public class Player : MonoBehaviour {
         energy = 100;
         maxEnergy = 100;
         plasmaDelay = 0.5f;
-        plasmaUpgrade = 0;
         plasmaBlastCost = 10;
         blinkCooldown = 1;
-	}
+        isPunching = false;
+        blinkGhost = false;
+        blinkUpgrade = false;
+        superBlink = false;
+        plasmaUpgrade = 0;
+        punchUpgrade = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -75,7 +82,7 @@ public class Player : MonoBehaviour {
         {
             transform.position += Vector3.right * 0.01f;
             RightFacing = true;
-            if (!IsPunching) thisSprite.sprite = walking[SpriteNum];
+            if (!isPunching) thisSprite.sprite = walking[SpriteNum];
             Vector3 newScale = this.transform.localScale;
             newScale.x = 1;
             this.transform.localScale = newScale;
@@ -85,7 +92,7 @@ public class Player : MonoBehaviour {
         {
             transform.position -= Vector3.right * 0.01f;
             RightFacing = false;
-            if (!IsPunching) thisSprite.sprite = walking[SpriteNum];
+            if (!isPunching) thisSprite.sprite = walking[SpriteNum];
             Vector3 newScale = this.transform.localScale;
             newScale.x = -1;
             this.transform.localScale = newScale;
@@ -94,7 +101,7 @@ public class Player : MonoBehaviour {
         else
         {
             IsMoving = false;
-            if (!IsPunching)
+            if (!isPunching)
             {
                 if (RightFacing) thisSprite.sprite = walking[1];
                 else thisSprite.sprite = walking[1];
@@ -106,18 +113,18 @@ public class Player : MonoBehaviour {
             else if (!HasJumped) GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
             HasJumped = true;
         }
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && punchUpgrade)
         {
-            if (!IsPunching)
+            if (!isPunching)
             {
                 counter = 0;
                 SpriteNum = 0;
                 thisSprite.sprite = punchingSprites[0];
             }
-            IsPunching = true;
+            isPunching = true;
         }
         counter += Time.deltaTime;
-        if (IsPunching)
+        if (isPunching)
         {
             if (counter > 0.1f)
             {
@@ -125,7 +132,7 @@ public class Player : MonoBehaviour {
                 SpriteNum++;
                 if (SpriteNum >= punchingSprites.Length)
                 {
-                    IsPunching = false;
+                    isPunching = false;
                     SpriteNum = 0;
                 }
                 thisSprite.sprite = punchingSprites[SpriteNum];
@@ -142,7 +149,7 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && blinkUpgrade)
         {
 
             if (blinkGhost == false)

@@ -8,7 +8,7 @@ public class Upgrade : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<SpriteRenderer>().sprite = sprites[upgradeID];
+        GetComponent<SpriteRenderer>().sprite = sprites[0];
 	}
 	
 	// Update is called once per frame
@@ -22,12 +22,27 @@ public class Upgrade : MonoBehaviour {
         {
             if (upgradeID == 0)
             {
-                collision.GetComponent<Player>().plasmaUpgrade = true;
+                collision.GetComponent<Player>().punchUpgrade = true;
             }
 
             if (upgradeID == 1)
             {
-                Destroy(collision.gameObject);
+                
+            }
+
+            if (upgradeID == 2)
+            {
+                
+            }
+
+            if (upgradeID == 3)
+            {
+                collision.GetComponent<Player>().blinkUpgrade = true;
+            }
+
+            if (upgradeID == 4)
+            {
+                collision.GetComponent<Player>().superBlink = true;
             }
 
             Destroy(gameObject);
