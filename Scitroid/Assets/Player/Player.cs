@@ -29,6 +29,8 @@ public class Player : MonoBehaviour {
     private float shotDelay;
     public GameObject plasma;
     private GameObject instantiatedPlasma;
+    public bool plasmaUpgrade = false;
+    public int plasmaBlastCost;
 
     //Blink
     public float blinkCooldown;
@@ -200,6 +202,15 @@ public class Player : MonoBehaviour {
             instantiatedPlasma = (GameObject) Instantiate(plasma, this.transform.position, Quaternion.identity);
             shotDelay = plasmaDelay;
         }
+
+        if (Input.GetKey(KeyCode.R) && shotDelay <= 0 && plasmaUpgrade && energy>=plasmaBlastCost)
+        {
+            instantiatedPlasma = (GameObject)Instantiate(plasma, this.transform.position, Quaternion.identity);
+            shotDelay = plasmaDelay;
+            instantiatedPlasma.transform.localScale = new Vector3(2, 2);
+            energy -= plasmaBlastCost;
+        }
+
         CamFollow();
     }
 
