@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\FacelessWizard.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Kanga.cs" />
      <Compile Include="Assets\Scripts\Enemies\Wizard.cs" />
      <Compile Include="Assets\Scripts\EnemyBulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\Levelizer.cs" />

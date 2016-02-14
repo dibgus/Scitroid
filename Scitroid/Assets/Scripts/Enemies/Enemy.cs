@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void Move()
+    public void Move()
     {
         Vector2 originLeft = new Vector2(transform.position.x - .09f, transform.position.y);
         Vector2 originRight = new Vector2(transform.position.x + .09f, transform.position.y);
@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour {
         }
     }
     
-    void Jump()
+    public void Jump()
     {
         Vector2 originUp = new Vector2(transform.position.x, transform.position.y);
 

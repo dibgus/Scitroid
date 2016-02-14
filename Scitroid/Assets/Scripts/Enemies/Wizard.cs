@@ -25,7 +25,7 @@ public class Wizard : MonoBehaviour {
         if (cooldown <= 0)
         {
             float theta = Mathf.Atan((target.transform.position.y - transform.position.y) / (target.transform.position.x - transform.position.x));
-            missileClone = (GameObject)Instantiate(missile, this.transform.position, Quaternion.identity);
+            missileClone = (GameObject)Instantiate(missile, transform.position, Quaternion.identity);
             if(target.transform.position.x > transform.position.x)
                 missileClone.GetComponent<Rigidbody2D>().velocity = new Vector3(Mathf.Cos(theta) * 3, Mathf.Sin(theta) * 3, 0);
             else
