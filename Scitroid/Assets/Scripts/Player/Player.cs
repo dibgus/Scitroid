@@ -85,9 +85,10 @@ public class Player : MonoBehaviour {
 
         RaycastHit2D checkDown = Physics2D.Raycast(new Vector2(this.transform.position.x, this.transform.position.y), Vector2.down, Mathf.Infinity, ignoreLayer);
         float distance = checkDown.distance;
+        print(distance);
         if (canDoubleJump)
         {
-            if (distance <= 0.6)
+            if (distance <= 0.6f)
             {
                 HasJumped = false;
             }
@@ -98,7 +99,7 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            if (distance <= 0.2)
+            if (distance <= 0.2f)
             {
                 HasJumped = false;
             }
@@ -141,7 +142,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
-            else if (!HasJumped)
+
+            if (!HasJumped && !OnLadder)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
             }
