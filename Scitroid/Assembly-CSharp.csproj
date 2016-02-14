@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Ghost.cs" />
+     <Compile Include="Assets\Scripts\PlayerBars.cs" />
      <Compile Include="Assets\Scripts\PopupWindow.cs" />
      <Compile Include="Assets\Scripts\Powerup.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />

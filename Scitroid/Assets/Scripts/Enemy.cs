@@ -10,9 +10,9 @@ public class Enemy : MonoBehaviour {
     Vector3 scale;
     int groundLayer = 1 << 10;
 
-    int health = 100;
+    public float health = 100;
     int damage = 10;
-    bool right;
+    public bool right;
     bool isJumping;
 
 	// Use this for initialization
@@ -26,6 +26,11 @@ public class Enemy : MonoBehaviour {
 	void Update () {
         Move();
         Jump();
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Move()
@@ -105,13 +110,5 @@ public class Enemy : MonoBehaviour {
         }
 
         return false;
-    }
-
-    void OnCollisionEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Plasma")
-        {
-            health -= 30;
-        }
     }
 }

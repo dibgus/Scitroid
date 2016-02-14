@@ -44,5 +44,20 @@ public class Plasma : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+            collision.gameObject.GetComponent<Enemy>().health -= 30.0f * this.transform.localScale.x;
+            if (player.GetComponent<Player>().RightFacing)
+            {
+                collision.gameObject.GetComponent<Enemy>().GetComponent<Rigidbody2D>().velocity = Vector2.right * 1.3f;
+            }
+
+            else
+            {
+                collision.gameObject.GetComponent<Enemy>().GetComponent<Rigidbody2D>().velocity = Vector2.left * 1.3f;
+            }
+        }
     }
 }

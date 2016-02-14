@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
     //Walking Animation
     float counter = 0;
     int SpriteNum = 0;
-    bool RightFacing;
+    public bool RightFacing;
     public Sprite[] walking;
     public Sprite[] ghostSprites;
     public Sprite[] punchingSprites;
@@ -18,11 +18,11 @@ public class Player : MonoBehaviour {
 
     //Stats
     public int damage;
-    public int health = 100;
+    public int health;
     public float jumpHeight;
-    public int energy = 0;
-    public int maxEnergy = 100;
-    public int maxHealth = 100;
+    public int energy;
+    public int maxEnergy;
+    public int maxHealth;
 
     //Plasma
     public float plasmaDelay;
