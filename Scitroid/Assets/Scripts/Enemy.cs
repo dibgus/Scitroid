@@ -40,18 +40,18 @@ public class Enemy : MonoBehaviour {
 
         if (hitLeft.collider == null)
         {
-            transform.position += Vector3.right * .025f;
+            transform.position += Vector3.right * .011f;
             right = true;
         }
 
         if (!right)
         {
-            transform.position += Vector3.left * .025f;
+            transform.position += Vector3.left * .011f;
         }
 
         if (right)
         {
-            transform.position += Vector3.right * .025f;
+            transform.position += Vector3.right * .011f;
         }
     }
     
