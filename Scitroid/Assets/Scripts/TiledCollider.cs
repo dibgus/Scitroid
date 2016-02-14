@@ -4,12 +4,14 @@ using System.Collections;
 public class TiledCollider : MonoBehaviour {
 
     public Sprite sprite;
+    bool ladder;
     GameObject spritefab;
 
 	// Use this for initialization
 	void Start () {
         MakeSpriteObject();
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        ladder = collider.isTrigger;
         if (collider == null) return;
         Vector2 spriteSize = sprite.bounds.size;
         Vector2 boxSize = collider.bounds.size;
@@ -33,7 +35,7 @@ public class TiledCollider : MonoBehaviour {
         {
             for (k = spriteSize.x / 2; k < boxSize.x; k += spriteSize.x)
             {
-                Instantiate(spritefab,new Vector3(collider.bounds.min.x+k, collider.bounds.min.y + i),transform.rotation);
+                Instantiate(spritefab,new Vector3(collider.bounds.min.x+k, collider.bounds.min.y + i,transform.position.z),transform.rotation);
             }
         }
         //float height = spriteSize.x * (Mathf.Round(boxSize.x / spriteSize.x));
@@ -52,4 +54,6 @@ public class TiledCollider : MonoBehaviour {
         spritefab.AddComponent<SpriteRenderer>();
         spritefab.GetComponent<SpriteRenderer>().sprite = sprite;
     }
+
+    public bool GetLadder() { return ladder; }
 }
