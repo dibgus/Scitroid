@@ -22,7 +22,7 @@ public class Upgrade : MonoBehaviour {
         {
             if (upgradeID == 0)
             {
-                collision.GetComponent<Player>().plasmaUpgrade = true;
+                collision.GetComponent<Player>().plasmaUpgrade = 1;
             }
 
             if (upgradeID == 1)
