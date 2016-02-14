@@ -118,8 +118,17 @@ public class Enemy : MonoBehaviour {
         {
             collision.gameObject.GetComponent<Player>().health -= 5;
 
-            collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
-            this.GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
+            if (collision.gameObject.GetComponent<Player>().RightFacing && right || collision.gameObject.GetComponent<Player>().RightFacing && !right)
+            {
+                collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
+                this.GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
+            }
+
+            else if (!collision.gameObject.GetComponent<Player>().RightFacing && right || !collision.gameObject.GetComponent<Player>().RightFacing && !right)
+            {
+                collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
+                this.GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
+            }
         }
     }
 }
