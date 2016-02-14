@@ -54,6 +54,9 @@ public class Player : MonoBehaviour {
     //Attacks
     bool isPunching;
     public bool punchUpgrade;
+    public GameObject sword;
+    GameObject instantiatedSword;
+    public bool hasSword = false;
 
     //Camera
     Camera cam;
@@ -161,6 +164,7 @@ public class Player : MonoBehaviour {
                 counter = 0;
                 SpriteNum = 0;
                 thisSprite.sprite = punchingSprites[0];
+                if (instantiatedSword == null && hasSword) instantiatedSword = (GameObject)Instantiate(sword, this.transform.position, Quaternion.identity);
             }
             isPunching = true;
         }
