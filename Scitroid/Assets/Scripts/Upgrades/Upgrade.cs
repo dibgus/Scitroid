@@ -3,12 +3,17 @@ using System.Collections;
 
 public class Upgrade : MonoBehaviour {
     public int upgradeID;
-    public Sprite[] sprites;
-
 
 	// Use this for initialization
 	void Start () {
-        //GetComponent<SpriteRenderer>().sprite = sprites[0];
+        switch (upgradeID)
+        {
+            case (0): GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Upgrades/plasmaicon"); break;
+            case (1): GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Upgrades/upgradedplasmaicon"); break;
+            case (2): GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Upgrades/plasmafreezeicon"); break;
+            case (3): GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Upgrades/bigupgradedplasmaicon"); break;
+            case (4): GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Upgrades/blinkicon"); break;
+        }
 	}
 	
 	// Update is called once per frame

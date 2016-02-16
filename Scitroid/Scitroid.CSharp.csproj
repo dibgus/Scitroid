@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -71,15 +65,18 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\FacelessWizard.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Kanga.cs" />
     <Compile Include="Assets\Scripts\Enemies\Wizard.cs" />
     <Compile Include="Assets\Scripts\EnemyBulletBehaviour.cs" />
     <Compile Include="Assets\Scripts\Levelizer.cs" />
     <Compile Include="Assets\Scripts\Player\BlinkAnimation.cs" />
+    <Compile Include="Assets\Scripts\Player\Bomb.cs" />
     <Compile Include="Assets\Scripts\Player\Ghost.cs" />
     <Compile Include="Assets\Scripts\Player\Melee.cs" />
     <Compile Include="Assets\Scripts\Player\Plasma.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBars.cs" />
+    <Compile Include="Assets\Scripts\Player\Sword.cs" />
     <Compile Include="Assets\Scripts\PopupWindow.cs" />
     <Compile Include="Assets\Scripts\Powerup.cs" />
     <Compile Include="Assets\Scripts\SceneChange.cs" />

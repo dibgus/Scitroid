@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
     //Walking Animation
     float counter = 0;
     int SpriteNum = 0;
-    public bool RightFacing,MustReload;
+    public bool RightFacing;
     public Sprite[] walking;
     public Sprite[] ghostSprites;
     public Sprite[] punchingSprites;
@@ -13,7 +13,9 @@ public class Player : MonoBehaviour {
 
     //Movement
     bool HasJumped;
-    int jumpCount;
+    bool HasDoubleJumped;
+    int ladderCount = 0;
+    bool finishedJump;
     bool canDoubleJump;
     bool canJump;
     bool IsMoving = false;
@@ -61,6 +63,8 @@ public class Player : MonoBehaviour {
     //Camera
     Camera cam;
     float minY = 0, minX = 0, maxY = 0, maxX = 0;
+    public bool MustReload = true, SceneSwitch = false;
+    public float SwitchTimer;
 
     //Layer
     int ignoreLayer = 1 << 10;
@@ -70,8 +74,8 @@ public class Player : MonoBehaviour {
     void Start () {
         thisSprite = GetComponent<SpriteRenderer>();
         thisSprite.sprite = walking[0];
-        CamSetup();
-
+        //CamSetup();
+        cam = Camera.main;
         health = 100;
         maxHealth = 100;
         energy = 100;
@@ -85,25 +89,20 @@ public class Player : MonoBehaviour {
         superBlink = false;
         plasmaUpgrade = 0;
         punchUpgrade = false;
-        jumpCount = 0;
         canDoubleJump = false;
         canJump = false;
         HasJumped = false;
+        SwitchTimer = 0.2f;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit2D checkDown = Physics2D.Raycast(new Vector2(this.transform.position.x, this.transform.position.y), Vector2.down, Mathf.Infinity, ignoreLayer);
-        float distance = checkDown.distance;
-        
-        if (distance <= .62f)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0, thisSprite.bounds.size.y / 2 + 0.1f), Vector2.down);
+        float distance = hit.distance;
+        if (hit.collider != null && distance < 0.1f && finishedJump && !hit.collider.isTrigger)
         {
-            canJump = true;
-        }
-
-        else
-        {
-            canJump = false;
+            HasJumped = false;
+            HasDoubleJumped = false;
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
@@ -137,11 +136,31 @@ public class Player : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+            if (OnLadder)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+                HasJumped = false;
+                HasDoubleJumped = false;
+            }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            finishedJump = false;
             //if (OnLadder) GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+
+            if (!OnLadder)
+            {
+                if (!HasJumped)
+                {
+                    GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+                    HasJumped = true;
+                }
+                else if (!HasDoubleJumped)
+                {
+                    GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+                    HasDoubleJumped = true;
+                }
+            }
 
             if (canJump)
             {
@@ -156,6 +175,10 @@ public class Player : MonoBehaviour {
                 canJump = true;
             }
             //HasDoubleJumped = true;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            finishedJump = true;
         }
         if (Input.GetKey(KeyCode.Q) && punchUpgrade)
         {
@@ -197,10 +220,9 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.E) && blinkUpgrade)
         {
 
-            if (blinkGhost == false)
+            if (blinkGhost == false || instantiatedGhost == null)
             {
                 Vector3 newPos = this.transform.position;
-
                 if (RightFacing)
                 {
                     newPos.x += 0.5f;
@@ -218,6 +240,8 @@ public class Player : MonoBehaviour {
             }
             CamFollow();
         }
+
+        if (Input.GetKeyDown(KeyCode.C)) CamSetup();
 
         if (instantiatedGhost != null)
         {
@@ -241,7 +265,7 @@ public class Player : MonoBehaviour {
         {
 
             blinkGhost = false;
-            if (!instantiatedGhost.GetComponent<Ghost>().inWall && blinkCounter <= 0)
+            if (instantiatedGhost!=null && !instantiatedGhost.GetComponent<Ghost>().inWall && blinkCounter <= 0)
             {
                 instantiatedBurst = Instantiate(blinkBurst);
                 instantiatedBurst.transform.position = this.transform.position;
@@ -306,20 +330,16 @@ public class Player : MonoBehaviour {
         }
 
         if (MustReload) CamSetup();
-        CamFollow();
-
-        //print(OnLadder);
+        if(!MustReload)CamFollow();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        print(collision.gameObject);
         //HasDoubleJumped = false;
     }
 
     void CamSetup()
     {
-        cam = Camera.main;
         GameObject[] allObjects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
         foreach (GameObject g in allObjects)
         {
@@ -333,7 +353,7 @@ public class Player : MonoBehaviour {
             maxY = top > maxY ? top : maxY;
             minY = bottom < minY ? bottom : minY;
         }
-        //cam = GetComponent<Camera>();
+        MustReload = false;
     }
 
     void CamFollow()
@@ -356,21 +376,38 @@ public class Player : MonoBehaviour {
             if (transform.position.y + boundsY >= maxY) SetY = maxY - boundsY;
             else SetY = minY + boundsY;
         }
-        //print(boundsX + "  ::  " + maxX +" , " + minX + "  ::  " + (player.transform.position.x + boundsX) + " , " + (player.transform.position.x-boundsX));
-        cam.transform.position = new Vector3(SetX, SetY, -10);
+        if (SceneSwitch)
+        {
+            if (Vector3.Distance(cam.transform.position, new Vector3(SetX, SetY, -10)) > 0.05f || SwitchTimer > 0)
+            {
+                cam.transform.position = Vector3.Lerp(cam.transform.position, new Vector3(SetX, SetY, -10), Time.deltaTime * 15);
+                SwitchTimer -= Time.deltaTime;
+            }
+            else {
+                SceneSwitch = false;
+                SwitchTimer = 0.2f;
+            }
+        }
+        else cam.transform.position = new Vector3(SetX, SetY, -10);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         TiledCollider ladderCheck = col.gameObject.GetComponent<TiledCollider>();
-        if (ladderCheck != null && ladderCheck.GetLadder()) OnLadder = true;
-        print("Entered!");
+        if (ladderCheck != null && ladderCheck.GetLadder())
+        {
+            OnLadder = true;
+            ladderCount++;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
         TiledCollider ladderCheck = col.gameObject.GetComponent<TiledCollider>();
-        if (ladderCheck != null && ladderCheck.GetLadder()) OnLadder = false;
-        print("Exited!");
+        if (ladderCheck != null && ladderCheck.GetLadder())
+        {
+            ladderCount--;
+            if(ladderCount == 0)OnLadder = false;
+        }
     }
 }

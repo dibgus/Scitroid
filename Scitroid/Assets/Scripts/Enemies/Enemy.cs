@@ -76,12 +76,14 @@ public class Enemy : MonoBehaviour {
 
         if (!right)
         {
-            transform.position += Vector3.left * .011f;
+            //transform.position += Vector3.left * .011f;
+            GetComponent<Rigidbody2D>().velocity += Vector2.left*0.1f;
         }
 
         if (right)
         {
-            transform.position += Vector3.right * .011f;
+            //transform.position += Vector3.right * .011f;
+            GetComponent<Rigidbody2D>().velocity += Vector2.right*0.1f;
         }
 
         timer += Time.deltaTime;
@@ -137,7 +139,7 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        print(GameObject.FindGameObjectWithTag("Explosion"));
+        //print(GameObject.FindGameObjectWithTag("Explosion"));
         if (collision.gameObject.tag == "Player" && GameObject.FindGameObjectWithTag("Explosion") == null)
         {
             collision.gameObject.GetComponent<Player>().health -= 5;
@@ -153,6 +155,11 @@ public class Enemy : MonoBehaviour {
                 collision.gameObject.GetComponent<Player>().GetComponent<Rigidbody2D>().velocity = new Vector3(1, 1) * 1.3f;
                 this.GetComponent<Rigidbody2D>().velocity = new Vector3(-1, 1) * 1.3f;
             }
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (transform.position.x > collision.gameObject.transform.position.x) GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
+            else collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.up * 3;
         }
     }
 
